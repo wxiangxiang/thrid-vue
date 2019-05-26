@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>组件传值</title>
+  </head>
+  <body>
+    <div class="app">
+      <h5>子传父的值{{ cc }}</h5>
+      <C @countadd="CountAddC" step="3"></C>
+      <C @countadd="CountAddC" step="2"></C>
+    </div>
+    <script src="lib/vue.js"></script>
+
+    <script>
+      var count = {
+        template: `
+                    <button @click="clickHandle">
+                          step{{step}},,,,{{msg}}当前的值为：{{count}}
+                    </button>
+                    `,
+        data() {
+          return {
+            count: 0
+          };
+        },
+        props: ["step", "msg"], //父传子
+        methods: {
+          clickHandle() {
+            this.count += this.step * 1;
+            this.$emit("countadd", this.count);
+          }
+        }
+      };
+
+      var app = new Vue({
+        el: ".app",
+        components: {
+          C: count
+        },
+        data: {
+          cc: 0
+        },
+        methods: {
+          CountAddC(v) {
+            this.cc = v;
+          }
+        }
+      });
+    </script>
+  </body>
+</html>

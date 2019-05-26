@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>ref引用</title>
+    <style>
+      .ball {
+        width: 100px;
+        height: 100px;
+        background-color: deeppink;
+        border-radius: 50%;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="app">
+      <div class="ball" ref="ballCtrl"></div>
+      <button @click="dianji">点击我</button>
+    </div>
+    <script src="../lib/vue.js"></script>
+    <script>
+      var app = new Vue({
+        el: ".app",
+        methods: {
+          dianji() {
+            /*
+               *this.$refs可以获取html中的所有设置了ref属性的标签
+               *this.$el获取整个模板html的内容
+               通过refs获取标签 可以设置标签的内容
+              */
+            this.$refs["ballCtrl"].style = "background:red";
+            this.$el.querySelector(".ball").innerHTML = `<p>hello</p>`;
+            console.log(this.$refs);
+            console.log(this.$el);
+          }
+        }
+      });
+    </script>
+  </body>
+</html>

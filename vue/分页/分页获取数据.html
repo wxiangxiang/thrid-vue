@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>分页获取数据</title>
+  </head>
+  <body>
+    <div class="app">
+      <ul v-for="i in product">
+        <li>{{ i.name }}</li>
+      </ul>
+      <button @click="created">加载更多</button>
+    </div>
+    <script src="../lib/vue.js"></script>
+    <script src="../lib/axios.min.js"></script>
+    <script>
+      var app = new Vue({
+        el: ".app",
+        data: {
+          page: 1,
+          product: []
+        },
+        methods: {
+          loadMore() {
+            axios
+              .get("http://api.cat-shop.penkuoer.com/api/v1/products", {
+                params: {
+                  page: this.page
+                }
+              })
+              .then(res => {
+                this.page += 1;
+                this.product = this.product.concat(res.data.products);
+              });
+          },
+          created() {
+            //生命周期函数，表示组件创建完成
+            this.loadMore();
+          }
+        }
+      });
+    </script>
+  </body>
+</html>

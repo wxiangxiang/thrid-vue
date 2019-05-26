@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>todowork</title>
+    <style>
+      .undo {
+        background: red;
+      }
+      .do {
+        background: green;
+      }
+      li {
+        list-style: none;
+      }
+    </style>
+  </head>
+  <body>
+    <h3>早晨需要做的事</h3>
+    <div class="app">
+      <!-- keyup键盘事件
+      .enter表示按键修饰符 按下回车键 -->
+      <input type="text" v-model="name" @keyup.enter="addthink" />
+      <button @click="addthink">添加</button>
+      <div v-for="(i,index) in list">
+        <ul>
+          <li>
+            <button :class="i.status?'do':'undo'">
+              {{ i.status ? "完成" : "未完成" }}
+            </button>
+            <span>{{ i.name }}</span>
+            <button @click="i.status=true" v-if="i.status==0">完成</button>
+            <button @click="removeData(index)">删除</button>
+          </li>
+        </ul>
+      </div>
+      <!-- <div v-for="i in list">{{ i }}</div> -->
+    </div>
+    <script src="../lib/vue.js"></script>
+    <script>
+      var app = new Vue({
+        el: ".app",
+        data: {
+          name: "",
+          list: []
+        },
+        methods: {
+          addthink() {
+            this.list.push({
+              id: this.count++,
+              name: this.name,
+              status: false
+            });
+          },
+          removeData(i) {
+            this.list.splice(i, 1);
+          }
+        }
+      });
+    </script>
+  </body>
+</html>

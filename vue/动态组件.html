@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>动态组件</title>
+    <style>
+      .box {
+        width: 100%;
+        height: 50px;
+        background: deeppink;
+        font-size: 1rem;
+      }
+      .boxChild li {
+        width: 100px;
+        line-height: 50px;
+        height: 50px;
+        color: #fff;
+        float: left;
+        list-style: none;
+        margin: 0 auto;
+        cursor: pointer;
+      }
+      .boxChild .cur {
+        color: greenyellow;
+        font-size: 1.5rem;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app">
+      <navbar @change="pageChange" :cp="current"></navbar>
+      <!--component 动态组件 通过使用is绑定对应的组件进行展示-->>
+      <compontent :is="current"> </compontent>
+    </div>
+    <script src="lib/vue.js"></script>
+
+    <script>
+      var navBar = {
+        template: `<div class="box">
+           <ul class="boxChild">
+             <li :class="cp=='hom'? 'cur':''" @click="pageTo('hom')">首页</li>
+             <li :class="cp=='list'? 'cur':''" @click="pageTo('list')">列表页</li>
+             <li :class="cp=='hot'? 'cur':''" @click="pageTo('hot')">热卖</li>
+             <li :class="cp=='me'? 'cur':''" @click="pageTo('me')">关于我们</li>
+             <li :class="cp=='user'? 'cur':''" @click="pageTo('user')">个人中心</li>
+           </ul>
+           </div>`,
+        props: ["cp"],
+        methods: {
+          pageTo(page) {
+            this.$emit("change", page);
+          }
+        }
+      };
+      var Hom = {
+        template: `<div><h5>我是首页</h5></div>`
+      };
+      var List = {
+        template: `<div><h5>我是列表页页</h5></div>`
+      };
+      var Hot = {
+        template: `<div><h5>我是热卖页</h5></div>`
+      };
+      var Me = {
+        template: `<div><h5>我是联系我们</h5></div>`
+      };
+      var User = {
+        template: `<div><h5>我是用户中心</h5></div>`
+      };
+
+      app = new Vue({
+        el: "#app",
+        components: {
+          navbar: navBar,
+          hom: Hom,
+          list: List,
+          hot: Hot,
+          me: Me,
+          user: User
+        },
+        data: {
+          current: ""
+        },
+        methods: {
+          pageChange(page) {
+            this.current = page;
+          }
+        }
+      });
+    </script>
+  </body>
+</html>

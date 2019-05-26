@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>定义一个样式</title>
+    <style>
+      .txt {
+        font-size: 20px;
+        font-weight: 600;
+      }
+      .name {
+        color: greenyellow;
+      }
+      .age {
+        color: hotpink;
+      }
+      .sex {
+        color: khaki;
+      }
+      .address {
+        color: lightblue;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app" :style="styles">
+      <p :class="classname">{{ person.name }}</p>
+      <p :class="classage">{{ person.age }}</p>
+      <p :class="mul">{{ person.sex }}</p>
+      <p class="address txt">{{ person.address }}</p>
+    </div>
+    <script src="../lib/vue.js"></script>
+    <script>
+      var app = new Vue({
+        el: "#app",
+        data: {
+          styles: {
+            width: "300px",
+            height: "300px",
+            backgroundColor: "#eee"
+          },
+          person: {
+            name: "Tom",
+            age: "20",
+            sex: "男",
+            address: "正新街"
+          },
+          classname: ["name", "age", "txt"],
+          classage: ["txt", "age"],
+          classsex: ["txt", "sex"],
+          classaddress: ["txt", "address"],
+          mul: [
+            {
+              sex: true,
+              txt: true,
+              age: false,
+              address: false
+            }
+          ]
+        }
+      });
+    </script>
+  </body>
+</html>

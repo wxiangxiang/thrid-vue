@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>组件-1</title>
+  </head>
+  <body>
+    <!-- 把一个共性的内容做一个封装 方便以后重复使用 -->
+    <div class="app">
+     <aaa/>
+    </div>
+    <script src="./lib/vue.js"></script>
+
+    <script>
+            //全局组件定义完成以后可以直接使用，不需要注册
+            //参数一表示组件id
+            //第二个参数表示组件的配置信息
+            Vue.component('mm',{
+                template:`<h5>这是一个全局组件</h5>`
+            });
+
+
+        var C={
+           template:`
+           <h5>我是又一个组件</h5>`
+        }
+      var H = {
+        //最简单的定义组建
+        //对象中含有一个template属性，表示组件使用的模板html内容
+        //在组件中定义的data必须是一个function，需要一个对象形式的返回值
+        //我们定义的组件拥有vue的所有特性
+        template: `
+            <div>
+                    <p>hello</p>
+                    <h5>{{msg}}</h5>
+                    <sb></sb>
+                    <mm></mm>
+                    <button @click="clickHandle">按钮</button>
+            </div>
+            `,
+            data(){
+                return{
+                    msg:'你好',
+                }
+            },
+            methods:{
+                clickHandle(){
+                    alert("您点击了按钮");
+                }
+            },
+            //组件是可以嵌套的
+            components:{
+                sb:C,
+            },
+        created(){
+            console.log("组件创建完成");
+        }
+      };
+      var app = new Vue({
+        el: ".app",
+        //局部组件，使用时需要先注册
+        components: {
+           aaa:H,
+        }
+      });
+    </script>
+  </body>
+</html>

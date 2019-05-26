@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>购物车数量</title>
+    <style>
+      .box {
+        width: 200px;
+        height: 300px;
+        border: 1px solid deeppink;
+        float: left;
+      }
+      .biaoti {
+        width: 200px;
+        font-style: normal;
+        text-align: center;
+        height: 30px;
+      }
+      .tupian {
+        width: 80px;
+        height: 80px;
+        display: block;
+        margin: 0 auto;
+      }
+      .miaoshu {
+        width: 200px;
+        height: 60px;
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="app">
+      <shopcart></shopcart>
+      <sh v-for="product in products" :p="product"></sh>
+    </div>
+    <script src="./lib/axios.min.js"></script>
+    <script src="./lib/vue.js"></script>
+    <script>
+      var shangpin = {
+        template: `<div class="box">
+           <h3 class="biaoti">{{p.name}}</h3>
+           <img class="tupian" src="./public/xiaoxiao.jpg"/>
+           <span style="font-size:14px; color:red">{{p.price}}</span>
+           <p class="miaoshu">{{p.descriptions}}</p>
+           <button @click="addcart(p)">加入购物车</button>
+           </div>`,
+        props: ["p"],
+        methods: {
+          addcart(p) {
+            eventBtn.$emit("aaa", 1);
+          }
+        }
+      };
+      var cart = {
+        template: `<div>
+          <p>购物车数量:{{count}}</p>
+          </div>`,
+        created() {
+          eventBtn.$on("aaa", this.addCartEnd);
+        },
+        data() {
+          return {
+            count: 0
+          };
+        },
+        methods: {
+          addCartEnd(v) {
+            //值可传可不传
+            this.count += v;
+          }
+        }
+      };
+      //事件总线  用来解决非相关组件传值
+      //使用一个空白的对象单独用来做事件的派发和监听
+      //常见的应用场景是游戏开发
+      //在vue中通过$on监听事件，通过$emit派发事件
+      var eventBtn = new Vue(); //定义一个空白的对象作为一个作为一个事件派发和监听的基础
+
+      var app = new Vue({
+        el: ".app",
+        components: {
+          sh: shangpin,
+          shopcart: cart
+        },
+        data: {
+          products: []
+        },
+        created() {
+          axios
+            .get("http://api.cat-shop.penkuoer.com/api/v1/products")
+            .then(res => {
+              this.products = res.data.products;
+            });
+        }
+      });
+    </script>
+  </body>
+</html>

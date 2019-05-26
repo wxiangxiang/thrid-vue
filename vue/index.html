@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>vue实例</title>
+    <script src="./lib/vue.js"></script>
+    <script src="./lib/jquery.min.js"></script>
+  </head>
+  <body>
+    <ul class="app">
+      <li v-for="(i,n) in people">{{ i }},索引值{{ n }}</li>
+    </ul>
+    <div id="app">
+      <h5>
+        {{
+          txt
+            .split("")
+            .reverse()
+            .join("")
+        }}
+      </h5>
+      <input type="text" v-model="txt" />
+    </div>
+    <div id="date">
+      <ul>
+        <li v-for="k in arr">
+          <div class="left">{{ k.title }}</div>
+          <img :src="k.url" />
+          <!--:叫数据绑定 -->
+        </li>
+      </ul>
+    </div>
+    <script>
+      var app = new Vue({
+        el: ".app",
+        data: {
+          people: [
+            {
+              name: "一菲",
+              age: 18
+            },
+            {
+              name: "碧瑶",
+              age: 19
+            }
+          ],
+          list: [1, 2, 3, 4, 5]
+        }
+      });
+      var app2 = new Vue({
+        el: "#app",
+        data: {
+          txt: "",
+          list: []
+        }
+      });
+      var app3 = new Vue({
+        el: "#date",
+        data: {
+          arr: []
+        }
+      });
+    </script>
+    <script>
+      $.getJSON("http://jsonplaceholder.typicode.com/photos", function(res) {
+        app3.arr = res;
+      });
+    </script>
+  </body>
+</html>

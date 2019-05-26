@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>增删改查</title>
+  </head>
+  <body>
+    <div class="app">
+      <input type="text" placeholder="请输入姓名" v-model="person.name" />
+      <input type="text" placeholder="请输入年龄" v-model="person.age" />
+      <button @click="baocun">保存</button>
+      <table>
+        <tr>
+          <th>序号</th>
+          <th>姓名</th>
+          <th>年龄</th>
+          <th>操作</th>
+        </tr>
+        <tr v-for="(p,index) in people">
+          <td>{{ index + 1 }}</td>
+          <td>{{ p.name }}</td>
+          <td>{{ p.age }}</td>
+          <td>
+            <a href="javascript:void(0)" @click="edit(p)">编辑</a>
+            <a href="javascript:void(0)" @click="removeData(p)">删除</a>
+          </td>
+        </tr>
+      </table>
+    </div>
+    <script src="../lib/vue.js"></script>
+    <script>
+      var app = new Vue({
+        el: ".app",
+        data: {
+          person: {
+            name: "",
+            age: ""
+          },
+          people: []
+        },
+        id: "",
+        methods: {
+          baocun() {
+            if (this.id) {
+              var index = this.people.findIndex(item => item.id == this.id);
+              this.people[index].name = this.person.name;
+              this.people[index].age = this.person.age;
+              this.id = "";
+            } else {
+              this.people.push({
+                id: Date.now(),
+                name: this.person.name,
+                age: this.person.age
+              });
+              this.person.name = "";
+              this.person.age = "";
+            }
+          },
+          edit(p) {
+            this.person.name = p.name;
+            this.person.age = p.age;
+            this.id = p.id;
+          },
+          removeData(p) {
+            var index = this.people.findIndex(item => item.id == this.id);
+            this.people.splice(index, 1);
+          }
+        }
+      });
+    </script>
+  </body>
+</html>

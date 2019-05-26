@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>插槽的使用</title>
+  </head>
+  <body>
+    <div class="app">
+      <demo></demo>
+      <pl>
+        <!--使用插槽时如果是具名插槽 使用v-slot:插槽的名字
+        使用template节点把要用在插槽中的内容括起来
+       temlpate不会生成真实的html节点-->
+        <template v-slot:h>
+          <h5>排名</h5>
+          <h3>我是最优秀的</h3>
+        </template>
+        <template v-slot:f>
+          <h6>谁才是最优秀的呢？</h6>
+        </template>
+      </pl>
+    </div>
+    <script src="./lib/vue.js"></script>
+    <script>
+      //组件模板必须要有一个根节点，有且仅有一个根节点
+      var demo = {
+        template: `<div>
+        <template>
+        <p>添加一行</p><p>又加了一行</p>
+        </template>
+        </div>`
+      };
+
+      //在定义组件的时候使用slot插槽可以把一段html内容传递到组件里面
+      //这段代码会替换掉slot标签进行显示
+      var productList = {
+        template: `<div>
+                <slot name="h"></slot>
+                 <ul>
+                  <li>第一名</li>
+                  <li>第二名</li>
+                  <li>第三名</li>
+                 </ul>
+                 <slot name="f"></slot>
+            </div>`
+      };
+
+      var app = new Vue({
+        el: ".app",
+        components: {
+          pl: productList,
+          demo: demo
+        }
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>watch监听</title>
+  </head>
+  <body>
+    <div class="app">
+      <input type="text" v-model="NickName" />
+      <p v-if="status">正在输入。。。。</p>
+    </div>
+    <script src="../lib/vue.js"></script>
+    <script>
+      var app = new Vue({
+        el: ".app",
+        data: {
+          NickName: "",
+          status: false
+        },
+        watch: {
+          NickName: function(v) {
+            if (v.length > 0) {
+              this.status = true;
+              console.log(v);
+            } else {
+              this.status = false;
+            }
+          }
+        }
+      });
+    </script>
+  </body>
+</html>
