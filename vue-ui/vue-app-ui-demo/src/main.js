@@ -6,6 +6,9 @@ import "./plugins/element.js";
 import H from "./pages/Index";
 import L from "./pages/List";
 import D from "./pages/Detail";
+import U from "./pages/User";
+import UI from "./pages/user/UserInfo.vue";
+import UP from "./pages/user/UserPWD.vue";
 
 Vue.config.productionTip = false;
 Vue.use(VueRouter);
@@ -24,9 +27,28 @@ const router = new VueRouter({
       name: "List"
     },
     {
-      path: "/list/:id", //路由传参，传递参数id
+      path: "/list/:id/:name?", //路由传参，传递参数id, :?"表示可选参数
       component: D,
       name: "Detail"
+    },
+    {
+      path: "/user/:id?", //路由地址,
+      component: U,
+      name: "User",
+      //通过children属性实现嵌套,可以嵌套很多级,
+      //每一个children属性值是一个路由对象组成的数组
+      //子路由内容显示在父路由对应的组件中的router-view节点中
+      children: [
+        //子路由,路由嵌套
+        {
+          path: "info",
+          component: UI
+        },
+        {
+          path: "pwd",
+          component: UP
+        }
+      ]
     }
   ]
 });
