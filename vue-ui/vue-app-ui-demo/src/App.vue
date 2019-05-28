@@ -55,22 +55,26 @@
         }
       }"
       >【详情页】</router-link>
+      <router-link :to="{name:'address'}">收货地址</router-link>
       <router-view></router-view>
       <!--  router-view是用来显示内容，我们所有的配置在路由表（routes）中的组件都会出现在此容器内  -->
+      <div class="main">
+        <ANav></ANav>
+        <router-view></router-view>
+      </div>
     </div>
-
-    <el-button type="primary">新增</el-button>
-    <people></people>
   </div>
 </template>
 
 <script>
 import people from "./components/people.vue";
+import ANav from "./components/ANav";
 
 export default {
   name: "app",
   components: {
-    people
+    people,
+    ANav
   }
 };
 </script>

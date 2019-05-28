@@ -7,8 +7,9 @@ import H from "./pages/Index";
 import L from "./pages/List";
 import D from "./pages/Detail";
 import U from "./pages/User";
-import UI from "./pages/user/UserInfo.vue";
-import UP from "./pages/user/UserPWD.vue";
+import UI from "./pages/user/UserInfo";
+import UP from "./pages/user/UserPWD";
+import AD from "./pages/user/UserAddress";
 
 Vue.config.productionTip = false;
 Vue.use(VueRouter);
@@ -32,7 +33,7 @@ const router = new VueRouter({
       name: "Detail"
     },
     {
-      path: "/user/:id?", //路由地址,
+      path: "/user", //路由地址,
       component: U,
       name: "User",
       //通过children属性实现嵌套,可以嵌套很多级,
@@ -42,11 +43,18 @@ const router = new VueRouter({
         //子路由,路由嵌套
         {
           path: "info",
-          component: UI
+          component: UI,
+          name: "info"
         },
         {
           path: "pwd",
-          component: UP
+          component: UP,
+          name: "pwd"
+        },
+        {
+          path: "address",
+          component: AD,
+          name: "address"
         }
       ]
     }
