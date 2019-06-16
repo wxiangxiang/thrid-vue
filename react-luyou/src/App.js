@@ -32,7 +32,7 @@ function App() {
             <Route path='/list/:id' component={Detail} />
             <Route path='/login' component={Login} />
             {/* 验证用户是否登陆 */}
-            <NeedLogin path='/user' component={User} />
+            <NeedLogin path='/user' component={User} userName='xxx' />
             {/* 加问号表示可选参数 */}
             <Route path='/products/:tag?' component={Products} />
 

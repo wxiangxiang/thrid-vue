@@ -1,18 +1,24 @@
 import React from 'react';
+import { useState } from 'react';
 
 import PropTypes from 'prop-types';
 import { login } from '../utils/auth';
 
 function Login(props) {
   const loginHandle = () => {
-    login();
+    login(userName);
     props.history.replace('/user');
   };
+  const [userName, setUserName] = useState('');
   return (
     <div>
       <ul>
         <li>
-          <input type='text' placeholder='输入用户名' userName='xxx' />
+          <input
+            type='text'
+            placeholder='输入用户名'
+            onKeyUp={event => setUserName(event.currentTarget.value)}
+          />
         </li>
         <li>
           <input type='password' placeholder='请输入密码' />
