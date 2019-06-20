@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>事件绑定</title>
+  </head>
+  <body>
+    <div id="app"></div>
+    <script src="./lib/react.development.js"></script>
+    <script src="lib/react-dom.development.js"></script>
+    <script src="lib/babel.min.js"></script>
+    <script type="text/babel">
+      const { Component } = React;
+      // const FormData = () => {
+      //     function changeHandle(event) {
+      //       console.log(event.currentTarget.value);
+      //     }
+      //     return (
+      //       <div className='form'>
+      //调用function定义的函数不用写注释
+      //         <input onKeyUp={changeHandle} />
+      //       </div>
+      //     );
+      //   };
+      class FormData extends Component {
+        constructor(props) {
+          super(props);
+          this.state = {
+            txt: '',
+            list: [],
+          };
+        }
+        changeHandle(event) {
+          //console.log(event);
+          this.setState({
+            txt: event.currentTarget.value,
+          });
+          if (event.keyCode == 13 && event.currentTarget.value) {
+            const list = this.state.list;
+            list.push(event.currentTarget.value);
+            this.setState({
+              list,
+            });
+          }
+        }
+        render() {
+          return (
+            <div className='form'>
+              <input
+                onKeyUp={event => {
+                  this.changeHandle(event);
+                }}
+              />
+              <p>当前输入框的值为{this.state.txt}</p>
+              <p>长度为{this.state.list.length}</p>
+              {this.state.list.map((item, index) => (
+                <h5 key={index}>{item}</h5>
+              ))}
+            </div>
+          );
+        }
+      }
+      ReactDOM.render(<FormData />, document.getElementById('app'));
+    </script>
+  </body>
+</html>

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>第一个React</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.bootcss.com/pace/1.0.2/themes/blue/pace-theme-bounce.css"
+    />
+  </head>
+  <body>
+    <div id="app"></div>
+    <!--引入所有的js文件-->
+    <script src="./lib/react.development.js"></script>
+    <script src="lib/react-dom.development.js"></script>
+    <!--要使用jsx语法需要引入此插件-->
+    <script src="./lib/babel.min.js"></script>
+    <script src="./lib/axios.min.js"></script>
+    <script src="https://cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+    <!--使用jsx的时候设置一下type-->
+    <script type="text/babel">
+      const { Component } = React;
+      class ListData extends Component {
+        constructor() {
+          super();
+          this.state = {
+            list: [],
+          };
+        }
+        componentDidMount() {
+          axios.get('http://jsonplaceholder.typicode.com/posts').then(res => {
+            this.setState({
+              list: res.data,
+            });
+          });
+        }
+        render() {
+          return (
+            <div>
+              <ul>
+                {this.state.list.map((item, index) => (
+                  <li key={item.id}>{item.title}</li>
+                ))}
+              </ul>
+            </div>
+          );
+        }
+      }
+      ReactDOM.render(<ListData />, document.getElementById('app'));
+    </script>
+  </body>
+</html>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>第一个React</title>
+  </head>
+  <body>
+    <div id="app"></div>
+    <!--引入所有的js文件-->
+    <script src="./lib/react.development.js"></script>
+    <script src="lib/react-dom.development.js"></script>
+    <!--要使用jsx语法需要引入此插件-->
+    <script src="./lib/babel.min.js"></script>
+    <!--使用jsx的时候设置一下type-->
+    <script type="text/babel">
+      /**
+       * react定义组建的时候使用大写字母开头
+       * 使用function定义组建的时候需要一个返回值，返回值就是页面要显示的内容
+       * 在新版本的react中function定义的组件也可以有局部状态和生命周期
+       *
+       * 可以使用class定义组件
+       * class定义的组件包含有自己的局部状态和生命周期
+       */
+      //通过一个function定义一个组件
+      function HelloWorld() {
+        return <h5>HelloWorld</h5>;
+      }
+      class Person extends React.Component {
+        render() {
+          return <h3>这是class定义的组件</h3>;
+        }
+      }
+      function App() {
+        return (
+          <div>
+            <HelloWorld />
+            <Person />
+          </div>
+        );
+      }
+      ReactDOM.render(<App />, document.getElementById('app'));
+    </script>
+  </body>
+</html>

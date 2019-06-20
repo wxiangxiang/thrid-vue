@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>list列表</title>
+  </head>
+  <body>
+    <div id="app"></div>
+    <script src="./lib/react.development.js"></script>
+    <script src="lib/react-dom.development.js"></script>
+    <script src="lib/babel.min.js"></script>
+    <script type="text/babel">
+      const { Component } = React;
+      const Person = props => (
+        <div style={{ color: props.color }}>
+          <h5>{props.name}</h5>
+          <p>{props.skill}</p>
+        </div>
+      );
+      class People extends Component {
+        constructor(props) {
+          super(props);
+        }
+        render() {
+          const people = [
+            { name: '大娃', skill: '力大无穷', color: 'red' },
+            { name: '二娃', skill: '顺风耳', color: 'green' },
+            { name: '三娃', skill: '千里眼', color: 'blue' },
+          ];
+          //在jsx中需要使用样式时，需要用className代替class
+          return (
+            <div>
+              {people.map((item, index) => (
+                <Person
+                  name={item.name}
+                  skill={item.skill}
+                  key={index}
+                  color={item.color}
+                />
+              ))}
+            </div>
+          );
+        }
+      }
+      ReactDOM.render(<People />, document.getElementById('app'));
+    </script>
+  </body>
+</html>
